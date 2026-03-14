@@ -2,8 +2,11 @@ package com.xy.course_scheduling.controller;
 
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
 import com.xy.course_scheduling.service.TeacherService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xy.course_scheduling.entity.Result;
@@ -26,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/teacherTimeWhitelist")
+@Slf4j
+@Api(tags = "教师时间白名单管理")
 public class TeacherTimeWhitelistController {
 
     @Resource
@@ -35,6 +40,7 @@ public class TeacherTimeWhitelistController {
 
     @PostMapping
     @OperLogAnn(title = "添加教师时间白名单", businessType = OperLogAnn.BusinessType.INSERT)
+    @ApiOperation(value = "添加教师时间白名单")
     public Result<TeacherTimeWhitelist> save(TeacherTimeWhitelist teacherTimeWhitelist) {
         boolean save = teacherTimeWhitelistService.save(teacherTimeWhitelist);
         if (save) {
@@ -45,6 +51,7 @@ public class TeacherTimeWhitelistController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除教师时间白名单", businessType = OperLogAnn.BusinessType.DELETE)
+    @ApiOperation(value = "删除教师时间白名单")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = teacherTimeWhitelistService.removeById(id);
         if (remove) {
@@ -55,6 +62,7 @@ public class TeacherTimeWhitelistController {
 
     @PutMapping
     @OperLogAnn(title = "修改教师时间白名单", businessType = OperLogAnn.BusinessType.UPDATE)
+    @ApiOperation(value = "修改教师时间白名单")
     public Result<String> update(TeacherTimeWhitelist teacherTimeWhitelist) {
         boolean update = teacherTimeWhitelistService.updateById(teacherTimeWhitelist);
         if (update) {
@@ -65,12 +73,14 @@ public class TeacherTimeWhitelistController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询教师时间白名单", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询教师时间白名单")
     public Result<TeacherTimeWhitelist> getById(@PathVariable Long id) {
         return Result.ok(teacherTimeWhitelistService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询教师时间白名单列表", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询教师时间白名单列表")
     public Result<List<TeacherTimeWhitelist>> list(TeacherTimeWhitelist teacherTimeWhitelist, Page<TeacherTimeWhitelist> page) {
         LambdaQueryWrapper<TeacherTimeWhitelist> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(teacherTimeWhitelist.getId()), TeacherTimeWhitelist::getId, teacherTimeWhitelist.getId());

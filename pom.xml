@@ -30,101 +30,126 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+        <!-- Spring Security 安全框架，提供认证和授权功能 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!-- Spring Boot Web 启动器，包含 Spring MVC 和嵌入式 Tomcat -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!-- Jackson Java 8 日期时间模块支持，用于 LocalDateTime 等类型的序列化/反序列化 -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
+        <!-- MySQL 数据库驱动程序 -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- Lombok 注解库，简化 Java 代码（如@Getter、@Setter 等） -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- Spring Boot 测试框架，包含 JUnit、Mockito 等 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Spring Security 测试支持，用于安全相关的单元测试 -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- MyBatis-Plus Spring Boot 3 专用 Starter -->
+        <!-- MyBatis-Plus Spring Boot 3 专用 Starter - ORM 持久层框架 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
             <version>3.5.7</version>
         </dependency>
 
-        <!-- 代码生成器 -->
+        <!-- MyBatis-Plus 代码生成器 - 自动生成 Entity、Mapper、Service 等代码 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.5.7</version>
         </dependency>
 
-        <!-- 模板引擎 (Freemarker 或 Velocity 二选一即可) -->
+        <!-- Freemarker 模板引擎 - 配合代码生成器使用 -->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>2.3.32</version>
         </dependency>
 
-        <!--   mybatis-plus的插件     -->
+        <!-- MyBatis-Plus 的 SQL 解析插件 - 提供分页、多租户等功能 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-jsqlparser</artifactId>
             <version>3.5.14</version>
         </dependency>
 
-        <!-- jwt相关依赖 -->
+        <!-- JWT(JSON Web Token)相关依赖 - 用于用户认证和令牌生成 -->
+        <!-- JWT API 接口定义 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>0.11.5</version>
         </dependency>
+        <!-- JWT 实现类 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
             <version>0.11.5</version>
         </dependency>
+        <!-- JWT 与 Jackson 集成 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
         </dependency>
-        <!-- fastjson依赖-->
+        <!-- FastJSON - 阿里巴巴的 JSON 处理库 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.83</version>
         </dependency>
 
+        <!-- 通义千问 DashScope SDK - 阿里云大模型服务 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dashscope-sdk-java</artifactId>
             <version>2.22.2</version>
         </dependency>
 
+        <!-- Spring Boot AOP 支持 - 面向切面编程，用于日志、事务等横切关注点 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+        <!-- Hutool - 华为开源的 Java 工具类库，提供丰富的便捷工具方法 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.38</version>
+        </dependency>
+        <!-- Knife4j - Swagger 的增强 UI 实现，提供更友好的 API 文档界面 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>

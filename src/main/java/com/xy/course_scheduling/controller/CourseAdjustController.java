@@ -8,7 +8,10 @@ import com.xy.course_scheduling.custom.annotations.OperLogAnn;
 import com.xy.course_scheduling.entity.CourseAdjust;
 import com.xy.course_scheduling.entity.Result;
 import com.xy.course_scheduling.service.CourseAdjustService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +26,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/courseAdjust")
+@Api(tags = "调课申请管理")
+@Slf4j
 public class CourseAdjustController {
 
     @Resource
@@ -30,6 +35,7 @@ public class CourseAdjustController {
 
     @PostMapping
     @OperLogAnn(title = "添加调课申请", businessType = OperLogAnn.BusinessType.INSERT)
+    @ApiOperation(value = "添加调课申请")
     public Result<CourseAdjust> save(@RequestBody CourseAdjust courseAdjust) {
         boolean save = courseAdjustService.submitAdjust(courseAdjust);
         if (save) {
@@ -40,13 +46,14 @@ public class CourseAdjustController {
 
     @PutMapping("/approve")
     @OperLogAnn(title = "审批调课申请", businessType = OperLogAnn.BusinessType.UPDATE)
+    @ApiOperation(value = "审批调课申请")
     public Result<String> approve(@RequestBody ApproveRequest request) {
         boolean result = courseAdjustService.approveAdjust(
-            request.getAdjustId(),
-            request.isApproved(),
-            request.getRemark(),
-            request.getApproverUsername(),
-            request.getApproverName()
+                request.getAdjustId(),
+                request.isApproved(),
+                request.getRemark(),
+                request.getApproverUsername(),
+                request.getApproverName()
         );
         if (result) {
             return Result.ok("审批成功");
@@ -56,6 +63,7 @@ public class CourseAdjustController {
 
     @PutMapping("/cancel/{id}")
     @OperLogAnn(title = "撤销调课申请", businessType = OperLogAnn.BusinessType.UPDATE)
+    @ApiOperation(value = "撤销调课申请")
     public Result<String> cancel(@PathVariable Integer id) {
         boolean result = courseAdjustService.cancelAdjust(id);
         if (result) {
@@ -66,6 +74,7 @@ public class CourseAdjustController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除调课申请", businessType = OperLogAnn.BusinessType.DELETE)
+    @ApiOperation(value = "删除调课申请")
     public Result<String> delete(@PathVariable Integer id) {
         boolean remove = courseAdjustService.removeById(id);
         if (remove) {
@@ -76,12 +85,14 @@ public class CourseAdjustController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询调课申请", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询调课申请")
     public Result<CourseAdjust> getById(@PathVariable Integer id) {
         return Result.ok(courseAdjustService.getById(id));
     }
 
     @GetMapping("/list")
     @OperLogAnn(title = "查询调课申请列表", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询调课申请列表")
     public Result<List<CourseAdjust>> list(CourseAdjust courseAdjust, Page<CourseAdjust> page) {
         LambdaQueryWrapper<CourseAdjust> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(courseAdjust.getSemesterId()), CourseAdjust::getSemesterId, courseAdjust.getSemesterId());
@@ -96,6 +107,7 @@ public class CourseAdjustController {
 
     @GetMapping("/my-list")
     @OperLogAnn(title = "查询我的调课申请列表", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询我的调课申请列表")
     public Result<List<CourseAdjust>> myList(CourseAdjust courseAdjust, Page<CourseAdjust> page, @RequestParam String username) {
         LambdaQueryWrapper<CourseAdjust> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(username), CourseAdjust::getApplicantUsername, username);
@@ -109,6 +121,7 @@ public class CourseAdjustController {
 
     @GetMapping("/stats")
     @OperLogAnn(title = "查询调课申请统计", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询调课申请统计")
     public Result<AdjustStats> stats(@RequestParam Integer semesterId) {
         LambdaQueryWrapper<CourseAdjust> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(CourseAdjust::getSemesterId, semesterId);
@@ -131,16 +144,45 @@ public class CourseAdjustController {
         private String approverUsername;
         private String approverName;
 
-        public Integer getAdjustId() { return adjustId; }
-        public void setAdjustId(Integer adjustId) { this.adjustId = adjustId; }
-        public boolean isApproved() { return approved; }
-        public void setApproved(boolean approved) { this.approved = approved; }
-        public String getRemark() { return remark; }
-        public void setRemark(String remark) { this.remark = remark; }
-        public String getApproverUsername() { return approverUsername; }
-        public void setApproverUsername(String approverUsername) { this.approverUsername = approverUsername; }
-        public String getApproverName() { return approverName; }
-        public void setApproverName(String approverName) { this.approverName = approverName; }
+        public Integer getAdjustId() {
+            return adjustId;
+        }
+
+        public void setAdjustId(Integer adjustId) {
+            this.adjustId = adjustId;
+        }
+
+        public boolean isApproved() {
+            return approved;
+        }
+
+        public void setApproved(boolean approved) {
+            this.approved = approved;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
+        public String getApproverUsername() {
+            return approverUsername;
+        }
+
+        public void setApproverUsername(String approverUsername) {
+            this.approverUsername = approverUsername;
+        }
+
+        public String getApproverName() {
+            return approverName;
+        }
+
+        public void setApproverName(String approverName) {
+            this.approverName = approverName;
+        }
     }
 
     public static class AdjustStats {
@@ -150,15 +192,44 @@ public class CourseAdjustController {
         private Long rejected;
         private Long cancelled;
 
-        public Integer getTotal() { return total; }
-        public void setTotal(Integer total) { this.total = total; }
-        public Long getPending() { return pending; }
-        public void setPending(Long pending) { this.pending = pending; }
-        public Long getApproved() { return approved; }
-        public void setApproved(Long approved) { this.approved = approved; }
-        public Long getRejected() { return rejected; }
-        public void setRejected(Long rejected) { this.rejected = rejected; }
-        public Long getCancelled() { return cancelled; }
-        public void setCancelled(Long cancelled) { this.cancelled = cancelled; }
+        public Integer getTotal() {
+            return total;
+        }
+
+        public void setTotal(Integer total) {
+            this.total = total;
+        }
+
+        public Long getPending() {
+            return pending;
+        }
+
+        public void setPending(Long pending) {
+            this.pending = pending;
+        }
+
+        public Long getApproved() {
+            return approved;
+        }
+
+        public void setApproved(Long approved) {
+            this.approved = approved;
+        }
+
+        public Long getRejected() {
+            return rejected;
+        }
+
+        public void setRejected(Long rejected) {
+            this.rejected = rejected;
+        }
+
+        public Long getCancelled() {
+            return cancelled;
+        }
+
+        public void setCancelled(Long cancelled) {
+            this.cancelled = cancelled;
+        }
     }
 }

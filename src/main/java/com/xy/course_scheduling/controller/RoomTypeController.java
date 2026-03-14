@@ -1,8 +1,11 @@
 package com.xy.course_scheduling.controller;
 
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xy.course_scheduling.entity.Result;
@@ -25,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/roomType")
+@Api(tags = "教室类型表")
+@Slf4j
 public class RoomTypeController {
 
     @Resource
@@ -32,6 +37,7 @@ public class RoomTypeController {
 
     @PostMapping
     @OperLogAnn(title = "添加教室类型表", businessType = OperLogAnn.BusinessType.INSERT)
+    @ApiOperation(value = "添加教室类型表")
     public Result<RoomType> save(RoomType roomType) {
         boolean save = roomTypeService.save(roomType);
         if (save) {
@@ -42,6 +48,7 @@ public class RoomTypeController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除教室类型表", businessType = OperLogAnn.BusinessType.DELETE)
+    @ApiOperation(value = "删除教室类型表")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = roomTypeService.removeById(id);
         if (remove) {
@@ -52,6 +59,7 @@ public class RoomTypeController {
 
     @PutMapping
     @OperLogAnn(title = "修改教室类型表", businessType = OperLogAnn.BusinessType.UPDATE)
+    @ApiOperation(value = "修改教室类型表")
     public Result<String> update(RoomType roomType) {
         boolean update = roomTypeService.updateById(roomType);
         if (update) {
@@ -62,12 +70,14 @@ public class RoomTypeController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询教室类型表", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询教室类型表")
     public Result<RoomType> getById(@PathVariable Long id) {
         return Result.ok(roomTypeService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询教室类型表", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询教室类型表")
     public Result<List<RoomType>> list(RoomType roomType, Page<RoomType> page) {
         LambdaQueryWrapper<RoomType> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(roomType.getTypeId()), RoomType::getTypeId, roomType.getTypeId());

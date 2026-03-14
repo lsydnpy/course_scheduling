@@ -6,8 +6,11 @@ import com.xy.course_scheduling.entity.SchedulePlan;
 import com.xy.course_scheduling.entity.SchedulingResult;
 import com.xy.course_scheduling.service.SemesterService;
 import com.xy.course_scheduling.service.SchedulePlanService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -28,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/schedulePlan")
+@Slf4j
+@Api(tags = "排课计划")
 public class SchedulePlanController {
 
     @Resource
@@ -38,6 +43,7 @@ public class SchedulePlanController {
     private HybridCourseSchedulingAlgorithm hybridCourseSchedulingAlgorithm;
 
     @PostMapping
+    @ApiOperation(value = "保存排课计划", notes = "保存排课计划")
     public Result<SchedulePlan> save(SchedulePlan schedulePlan) {
         // 检查该学期是否已有排课计划
         List<SchedulePlan> existingPlans = schedulePlanService.list(new LambdaQueryWrapper<SchedulePlan>()
@@ -65,19 +71,20 @@ public class SchedulePlanController {
      * 执行排课（前端主动调用）
      */
     @PostMapping("/execute")
-    public Result<String> executeSchedule(@RequestParam("semesterId") Integer semesterId, 
+    @ApiOperation(value = "执行排课", notes = "执行排课")
+    public Result<String> executeSchedule(@RequestParam("semesterId") Integer semesterId,
                                           @RequestParam("schedulePlanId") Integer schedulePlanId) {
         System.out.println("=== 排课请求参数 ===");
         System.out.println("semesterId: " + semesterId);
         System.out.println("schedulePlanId: " + schedulePlanId);
-        
+
         if (semesterId == null || semesterId <= 0) {
             return Result.fail("参数错误：semesterId 无效");
         }
         if (schedulePlanId == null || schedulePlanId <= 0) {
             return Result.fail("参数错误：schedulePlanId 无效");
         }
-        
+
         // 异步执行排课
         new Thread(() -> {
             try {
@@ -91,11 +98,12 @@ public class SchedulePlanController {
                 e.printStackTrace();
             }
         }).start();
-        
+
         return Result.ok("排课已启动，请稍后查看结果");
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除排课计划", notes = "删除排课计划")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = schedulePlanService.removeById(id);
         if (remove) {
@@ -105,6 +113,7 @@ public class SchedulePlanController {
     }
 
     @PutMapping
+    @ApiOperation(value = "修改排课计划", notes = "修改排课计划")
     public Result<String> update(SchedulePlan schedulePlan) {
         boolean update = schedulePlanService.updateById(schedulePlan);
         if (update) {
@@ -114,11 +123,13 @@ public class SchedulePlanController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "获取排课计划", notes = "获取排课计划")
     public Result<SchedulePlan> getById(@PathVariable Long id) {
         return Result.ok(schedulePlanService.getById(id));
     }
 
     @GetMapping("list")
+    @ApiOperation(value = "获取排课计划列表", notes = "获取排课计划列表")
     public Result<List<SchedulePlan>> list(SchedulePlan schedulePlan, Page<SchedulePlan> page) {
         LambdaQueryWrapper<SchedulePlan> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(schedulePlan.getSchedulePlanId()), SchedulePlan::getSchedulePlanId, schedulePlan.getSchedulePlanId());
@@ -126,7 +137,7 @@ public class SchedulePlanController {
         wrapper.like(ObjectUtils.isNotEmpty(schedulePlan.getStatus()), SchedulePlan::getStatus, schedulePlan.getStatus());
         wrapper.eq(SchedulePlan::getDeleted, 0);
         wrapper.orderByDesc(SchedulePlan::getCreatedTime);
-        
+
         com.baomidou.mybatisplus.core.metadata.IPage<SchedulePlan> pageData = schedulePlanService.page(page, wrapper);
         pageData.getRecords().forEach(item -> item.setSemester(semesterService.getById(item.getSemesterId())));
         return Result.ok(pageData);
@@ -136,6 +147,7 @@ public class SchedulePlanController {
      * 重新排课（清空现有课表后重新排课）
      */
     @PostMapping("/retry/{id}")
+    @ApiOperation(value = "重新排课", notes = "重新排课")
     public Result<String> retrySchedule(@PathVariable Integer id) {
         SchedulePlan plan = schedulePlanService.getById(id);
         if (plan == null) {

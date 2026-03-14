@@ -3,8 +3,11 @@ package com.xy.course_scheduling.controller;
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
 import com.xy.course_scheduling.service.CampusService;
 import com.xy.course_scheduling.service.RoomTypeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xy.course_scheduling.entity.Result;
@@ -27,6 +30,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/classroom")
+@Api(tags = "教室信息表")
+@Slf4j
+
 public class ClassroomController {
 
     @Resource
@@ -38,6 +44,7 @@ public class ClassroomController {
 
     @PostMapping
     @OperLogAnn(title = "添加教室信息", businessType = OperLogAnn.BusinessType.INSERT)
+    @ApiOperation(value = "添加教室信息")
     public Result<Classroom> save(Classroom classroom) {
         boolean save = classroomService.save(classroom);
         if (save) {
@@ -48,6 +55,7 @@ public class ClassroomController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除教室信息", businessType = OperLogAnn.BusinessType.DELETE)
+    @ApiOperation(value = "删除教室信息")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = classroomService.removeById(id);
         if (remove) {
@@ -58,6 +66,7 @@ public class ClassroomController {
 
     @PutMapping
     @OperLogAnn(title = "修改教室信息", businessType = OperLogAnn.BusinessType.UPDATE)
+    @ApiOperation(value = "修改教室信息")
     public Result<String> update(Classroom classroom) {
         boolean update = classroomService.updateById(classroom);
         if (update) {
@@ -68,12 +77,14 @@ public class ClassroomController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询教室信息", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询教室信息")
     public Result<Classroom> getById(@PathVariable Long id) {
         return Result.ok(classroomService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询教室信息列表", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询教室信息列表")
     public Result<List<Classroom>> list(Classroom classroom, Page<Classroom> page) {
         LambdaQueryWrapper<Classroom> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(classroom.getClassroomId()), Classroom::getClassroomId, classroom.getClassroomId());

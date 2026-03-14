@@ -3,8 +3,11 @@ package com.xy.course_scheduling.controller;
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
 import com.xy.course_scheduling.service.CourseService;
 import com.xy.course_scheduling.service.RoomTypeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xy.course_scheduling.entity.Result;
@@ -27,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/coursePart")
+@Api(tags = "课程分块表（理论/实践部分）")
+@Slf4j
 public class CoursePartController {
 
     @Resource
@@ -38,6 +43,7 @@ public class CoursePartController {
 
     @PostMapping
     @OperLogAnn(title = "添加课程分块表（理论/实践部分）", businessType = OperLogAnn.BusinessType.INSERT)
+    @ApiOperation(value = "添加课程分块表（理论/实践部分）")
     public Result<CoursePart> save(CoursePart coursePart) {
         boolean save = coursePartService.save(coursePart);
         if (save) {
@@ -48,6 +54,7 @@ public class CoursePartController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除课程分块表（理论/实践部分）", businessType = OperLogAnn.BusinessType.DELETE)
+    @ApiOperation(value = "删除课程分块表（理论/实践部分）")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = coursePartService.removeById(id);
         if (remove) {
@@ -58,6 +65,7 @@ public class CoursePartController {
 
     @PutMapping
     @OperLogAnn(title = "修改课程分块表（理论/实践部分）", businessType = OperLogAnn.BusinessType.UPDATE)
+    @ApiOperation(value = "修改课程分块表（理论/实践部分）")
     public Result<String> update(CoursePart coursePart) {
         boolean update = coursePartService.updateById(coursePart);
         if (update) {
@@ -68,12 +76,14 @@ public class CoursePartController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询课程分块表（理论/实践部分）", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询课程分块表（理论/实践部分）")
     public Result<CoursePart> getById(@PathVariable Long id) {
         return Result.ok(coursePartService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询课程分块表（理论/实践部分）列表", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询课程分块表（理论/实践部分）列表")
     public Result<List<CoursePart>> list(CoursePart coursePart, Page<CoursePart> page) {
         LambdaQueryWrapper<CoursePart> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(coursePart.getPartId()), CoursePart::getPartId, coursePart.getPartId());

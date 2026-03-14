@@ -2,8 +2,11 @@ package com.xy.course_scheduling.controller;
 
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
 import com.xy.course_scheduling.service.CollegeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xy.course_scheduling.entity.Result;
@@ -26,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/studentGroup")
+@Slf4j
+@Api(tags = "班级信息表")
 public class StudentGroupController {
 
     @Resource
@@ -35,6 +40,7 @@ public class StudentGroupController {
 
     @PostMapping
     @OperLogAnn(title = "添加班级信息", businessType = OperLogAnn.BusinessType.INSERT)
+    @ApiOperation(value = "添加班级信息")
     public Result<StudentGroup> save(StudentGroup studentGroup) {
         boolean save = studentGroupService.save(studentGroup);
         if (save) {
@@ -45,6 +51,7 @@ public class StudentGroupController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除班级信息", businessType = OperLogAnn.BusinessType.DELETE)
+    @ApiOperation(value = "删除班级信息")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = studentGroupService.removeById(id);
         if (remove) {
@@ -55,6 +62,7 @@ public class StudentGroupController {
 
     @PutMapping
     @OperLogAnn(title = "修改班级信息", businessType = OperLogAnn.BusinessType.UPDATE)
+    @ApiOperation(value = "修改班级信息")
     public Result<String> update(StudentGroup studentGroup) {
         boolean update = studentGroupService.updateById(studentGroup);
         if (update) {
@@ -65,12 +73,14 @@ public class StudentGroupController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询班级信息", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询班级信息")
     public Result<StudentGroup> getById(@PathVariable Long id) {
         return Result.ok(studentGroupService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询班级信息", businessType = OperLogAnn.BusinessType.SELECT)
+    @ApiOperation(value = "查询班级信息")
     public Result<List<StudentGroup>> list(StudentGroup studentGroup, Page<StudentGroup> page) {
         LambdaQueryWrapper<StudentGroup> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(studentGroup.getClassId()), StudentGroup::getClassId, studentGroup.getClassId());
