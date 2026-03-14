@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3309/course_scheduling?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+    #configuration:
+  # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8080 # 配置服务器端口
+
+#配置jwt安全口令和有效期
+jwt:
+  secret: zhengzhihaodgjmyjiushiyigefeicaiyuecaihaiyueaiwanzhengzhihaodgjmyjiushiyigefeicaiyuecaihaiyueaiwan
+  expiration: 691200000 # 8天
