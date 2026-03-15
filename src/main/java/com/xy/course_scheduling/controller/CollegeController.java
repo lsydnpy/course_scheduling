@@ -1,8 +1,8 @@
 package com.xy.course_scheduling.controller;
 
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/college")
-@Api(tags = "学院信息表")
+@Tag(name = "学院信息表")
 @Slf4j
 public class CollegeController {
 
@@ -37,7 +37,7 @@ public class CollegeController {
 
     @PostMapping
     @OperLogAnn(title = "添加学院信息", businessType = OperLogAnn.BusinessType.INSERT)
-    @ApiOperation(value = "添加学院信息")
+    @Operation(summary = "添加学院信息")
     public Result<College> save(College college) {
         boolean save = collegeService.save(college);
         if (save) {
@@ -48,7 +48,7 @@ public class CollegeController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除学院信息", businessType = OperLogAnn.BusinessType.DELETE)
-    @ApiOperation(value = "删除学院信息")
+    @Operation(summary = "删除学院信息")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = collegeService.removeById(id);
         if (remove) {
@@ -59,7 +59,7 @@ public class CollegeController {
 
     @PutMapping
     @OperLogAnn(title = "修改学院信息", businessType = OperLogAnn.BusinessType.UPDATE)
-    @ApiOperation(value = "修改学院信息")
+    @Operation(summary = "修改学院信息")
     public Result<String> update(College college) {
         boolean update = collegeService.updateById(college);
         if (update) {
@@ -70,14 +70,14 @@ public class CollegeController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询学院信息", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询学院信息")
+    @Operation(summary = "查询学院信息")
     public Result<College> getById(@PathVariable Long id) {
         return Result.ok(collegeService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询学院信息列表", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询学院信息列表")
+    @Operation(summary = "查询学院信息列表")
     public Result<List<College>> list(College college, Page<College> page) {
         LambdaQueryWrapper<College> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(college.getCollegeId()), College::getCollegeId, college.getCollegeId());

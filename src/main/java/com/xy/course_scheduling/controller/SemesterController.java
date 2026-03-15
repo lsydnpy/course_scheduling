@@ -1,8 +1,8 @@
 package com.xy.course_scheduling.controller;
 
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/semester")
 @Slf4j
-@Api(tags = "学期信息表")
+@Tag(name = "学期信息表")
 public class SemesterController {
 
     @Resource
@@ -37,7 +37,7 @@ public class SemesterController {
 
     @PostMapping
     @OperLogAnn(title = "添加学期信息", businessType = OperLogAnn.BusinessType.INSERT)
-    @ApiOperation(value = "添加学期信息")
+    @Operation(summary = "添加学期信息")
     public Result<Semester> save(Semester semester) {
         boolean save = semesterService.save(semester);
         if (save) {
@@ -48,7 +48,7 @@ public class SemesterController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除学期信息", businessType = OperLogAnn.BusinessType.DELETE)
-    @ApiOperation(value = "删除学期信息")
+    @Operation(summary = "删除学期信息")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = semesterService.removeById(id);
         if (remove) {
@@ -59,7 +59,7 @@ public class SemesterController {
 
     @PutMapping
     @OperLogAnn(title = "修改学期信息", businessType = OperLogAnn.BusinessType.UPDATE)
-    @ApiOperation(value = "修改学期信息")
+    @Operation(summary = "修改学期信息")
     public Result<String> update(Semester semester) {
         boolean update = semesterService.updateById(semester);
         if (update) {
@@ -70,14 +70,14 @@ public class SemesterController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询学期信息", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询学期信息")
+    @Operation(summary = "查询学期信息")
     public Result<Semester> getById(@PathVariable Long id) {
         return Result.ok(semesterService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询学期信息", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询学期信息")
+    @Operation(summary = "查询学期信息")
     public Result<List<Semester>> list(Semester semester, Page<Semester> page) {
         LambdaQueryWrapper<Semester> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(semester.getSemesterId()), Semester::getSemesterId, semester.getSemesterId());

@@ -2,8 +2,8 @@ package com.xy.course_scheduling.controller;
 
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
 import com.xy.course_scheduling.service.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/teachingTask")
 @Slf4j
-@Api(tags = "教学任务表")
+@Tag(name = "教学任务表")
 public class TeachingTaskController {
 
     @Resource
@@ -49,7 +49,7 @@ public class TeachingTaskController {
 
     @PostMapping
     @OperLogAnn(title = "添加教学任务", businessType = OperLogAnn.BusinessType.INSERT)
-    @ApiOperation(value = "添加教学任务")
+    @Operation(summary = "添加教学任务")
     public Result<TeachingTask> save(TeachingTask teachingTask) {
         boolean save = teachingTaskService.save(teachingTask);
         if (save) {
@@ -60,7 +60,7 @@ public class TeachingTaskController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除教学任务", businessType = OperLogAnn.BusinessType.DELETE)
-    @ApiOperation(value = "删除教学任务")
+    @Operation(summary = "删除教学任务")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = teachingTaskService.removeById(id);
         if (remove) {
@@ -71,7 +71,7 @@ public class TeachingTaskController {
 
     @PutMapping
     @OperLogAnn(title = "修改教学任务", businessType = OperLogAnn.BusinessType.UPDATE)
-    @ApiOperation(value = "修改教学任务")
+    @Operation(summary = "修改教学任务")
     public Result<String> update(TeachingTask teachingTask) {
         boolean update = teachingTaskService.updateById(teachingTask);
         if (update) {
@@ -82,14 +82,14 @@ public class TeachingTaskController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询教学任务", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询教学任务")
+    @Operation(summary = "查询教学任务")
     public Result<TeachingTask> getById(@PathVariable Long id) {
         return Result.ok(teachingTaskService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询教学任务列表", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询教学任务列表")
+    @Operation(summary = "查询教学任务列表")
     public Result<List<TeachingTask>> list(TeachingTask teachingTask, Page<TeachingTask> page) {
         LambdaQueryWrapper<TeachingTask> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(teachingTask.getTaskId()), TeachingTask::getTaskId, teachingTask.getTaskId());

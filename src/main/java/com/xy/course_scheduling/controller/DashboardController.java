@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.xy.course_scheduling.entity.Result;
 import com.xy.course_scheduling.entity.TeachingTask;
 import com.xy.course_scheduling.service.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/dashboard")
-@Api(tags = "仪表盘统计接口")
+@Tag(name = "仪表盘统计接口")
 @Slf4j
 public class DashboardController {
 
@@ -47,7 +47,7 @@ public class DashboardController {
     private SemesterService semesterService;
 
     @GetMapping("/stats")
-    @ApiOperation(value = "获取仪表盘统计信息")
+    @Operation(summary = "获取仪表盘统计信息")
     public Result<Map<String, Object>> getStats() {
         Map<String, Object> stats = new HashMap<>();
 
@@ -91,7 +91,7 @@ public class DashboardController {
     }
 
     @GetMapping("/task-stats")
-    @ApiOperation(value = "获取教学任务统计信息")
+    @Operation(summary = "获取教学任务统计信息")
     public Result<Map<String, Object>> getTaskStats() {
         Map<String, Object> stats = new HashMap<>();
 

@@ -3,8 +3,8 @@ package com.xy.course_scheduling.controller;
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
 import com.xy.course_scheduling.entity.CustomUserDetails;
 import com.xy.course_scheduling.utils.JwtUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/admin")
-@Api(tags = "管理员信息表")
+@Tag(name = "管理员信息表")
 @Slf4j
 public class AdminController {
 
@@ -54,7 +54,7 @@ public class AdminController {
 
     @PostMapping
     @OperLogAnn(title = "添加管理员信息", businessType = OperLogAnn.BusinessType.INSERT)
-    @ApiOperation(value = "添加管理员信息")
+    @Operation(summary = "添加管理员信息")
     public Result<Admin> save(Admin admin) {
         // 加密密码
         if (admin.getPassword() != null && !admin.getPassword().isEmpty()) {
@@ -69,7 +69,7 @@ public class AdminController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除管理员信息", businessType = OperLogAnn.BusinessType.DELETE)
-    @ApiOperation(value = "删除管理员信息")
+    @Operation(summary = "删除管理员信息")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = adminService.removeById(id);
         if (remove) {
@@ -80,7 +80,7 @@ public class AdminController {
 
     @PutMapping
     @OperLogAnn(title = "修改管理员信息", businessType = OperLogAnn.BusinessType.UPDATE)
-    @ApiOperation(value = "修改管理员信息")
+    @Operation(summary = "修改管理员信息")
     public Result<String> update(Admin admin) {
         boolean update = adminService.updateById(admin);
         if (update) {
@@ -91,14 +91,14 @@ public class AdminController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询管理员信息", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询管理员信息")
+    @Operation(summary = "查询管理员信息")
     public Result<Admin> getById(@PathVariable Long id) {
         return Result.ok(adminService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询管理员信息列表", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询管理员信息列表")
+    @Operation(summary = "查询管理员信息列表")
     public Result<List<Admin>> list(Admin admin, Page<Admin> page) {
         LambdaQueryWrapper<Admin> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(admin.getAdminId()), Admin::getAdminId, admin.getAdminId());
@@ -110,7 +110,7 @@ public class AdminController {
 
     @GetMapping("login")
     @OperLogAnn(title = "管理员登录", businessType = OperLogAnn.BusinessType.OTHER)
-    @ApiOperation(value = "管理员登录")
+    @Operation(summary = "管理员登录")
     public Result<Map<String, String>> login(Admin admin) {
         try {
             // 检查用户名和密码是否为空

@@ -1,8 +1,8 @@
 package com.xy.course_scheduling.controller;
 
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/operLog")
-@Api(tags = "系统操作日志记录表")
+@Tag(name = "系统操作日志记录表")
 @Slf4j
 public class OperLogController {
 
@@ -37,7 +37,7 @@ public class OperLogController {
 
     @PostMapping
     @OperLogAnn(title = "添加系统操作日志记录", businessType = OperLogAnn.BusinessType.INSERT)
-    @ApiOperation(value = "添加系统操作日志记录")
+    @Operation(summary = "添加系统操作日志记录")
     public Result<OperLog> save(OperLog operLog) {
         boolean save = operLogService.save(operLog);
         if (save) {
@@ -48,7 +48,7 @@ public class OperLogController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除系统操作日志记录", businessType = OperLogAnn.BusinessType.DELETE)
-    @ApiOperation(value = "删除系统操作日志记录")
+    @Operation(summary = "删除系统操作日志记录")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = operLogService.removeById(id);
         if (remove) {
@@ -59,7 +59,7 @@ public class OperLogController {
 
     @PutMapping
     @OperLogAnn(title = "修改系统操作日志记录", businessType = OperLogAnn.BusinessType.UPDATE)
-    @ApiOperation(value = "修改系统操作日志记录")
+    @Operation(summary = "修改系统操作日志记录")
     public Result<String> update(OperLog operLog) {
         boolean update = operLogService.updateById(operLog);
         if (update) {
@@ -70,14 +70,14 @@ public class OperLogController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询系统操作日志记录", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询系统操作日志记录")
+    @Operation(summary = "查询系统操作日志记录")
     public Result<OperLog> getById(@PathVariable Long id) {
         return Result.ok(operLogService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询系统操作日志记录", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询系统操作日志记录")
+    @Operation(summary = "查询系统操作日志记录")
     public Result<List<OperLog>> list(OperLog operLog, Page<OperLog> page) {
         LambdaQueryWrapper<OperLog> wrapper = new LambdaQueryWrapper<>();
         wrapper.like(ObjectUtils.isNotEmpty(operLog.getTitle()), OperLog::getTitle, operLog.getTitle());

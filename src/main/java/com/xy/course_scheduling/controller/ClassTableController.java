@@ -3,8 +3,8 @@ package com.xy.course_scheduling.controller;
 import com.xy.course_scheduling.entity.*;
 import com.xy.course_scheduling.service.*;
 import com.xy.course_scheduling.service.impl.TeacherScheduleService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/classTable")
-@Api(tags = "课程表管理相关接口")
+@Tag(name = "课程表管理相关接口")
 @Slf4j
 public class ClassTableController {
     @Resource
@@ -28,7 +28,7 @@ public class ClassTableController {
 
 
     @GetMapping
-    @ApiOperation(value = "获取教师课程表")
+    @Operation(summary = "获取教师课程表")
     public Result<List<ClassTable>> getTeacherClassTable(Integer teacherId) {
         List<ClassTable> classTableList = teacherScheduleService.getTeacherSchedule(teacherId);
         return Result.ok(classTableList);

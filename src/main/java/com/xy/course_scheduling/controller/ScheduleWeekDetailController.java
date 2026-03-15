@@ -1,8 +1,8 @@
 package com.xy.course_scheduling.controller;
 
 import com.xy.course_scheduling.custom.annotations.OperLogAnn;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/scheduleWeekDetail")
 @Slf4j
-@Api(tags = "排课周次详情表")
+@Tag(name = "排课周次详情表")
 public class ScheduleWeekDetailController {
 
     @Resource
@@ -37,7 +37,7 @@ public class ScheduleWeekDetailController {
 
     @PostMapping
     @OperLogAnn(title = "添加排课周次详情表记录", businessType = OperLogAnn.BusinessType.INSERT)
-    @ApiOperation(value = "添加排课周次详情表记录")
+    @Operation(summary = "添加排课周次详情表记录")
     public Result<ScheduleWeekDetail> save(ScheduleWeekDetail scheduleWeekDetail) {
         boolean save = scheduleWeekDetailService.save(scheduleWeekDetail);
         if (save) {
@@ -48,7 +48,7 @@ public class ScheduleWeekDetailController {
 
     @DeleteMapping("/{id}")
     @OperLogAnn(title = "删除排课周次详情表记录", businessType = OperLogAnn.BusinessType.DELETE)
-    @ApiOperation(value = "删除排课周次详情表记录")
+    @Operation(summary = "删除排课周次详情表记录")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = scheduleWeekDetailService.removeById(id);
         if (remove) {
@@ -59,7 +59,7 @@ public class ScheduleWeekDetailController {
 
     @PutMapping
     @OperLogAnn(title = "修改排课周次详情表记录", businessType = OperLogAnn.BusinessType.UPDATE)
-    @ApiOperation(value = "修改排课周次详情表记录")
+    @Operation(summary = "修改排课周次详情表记录")
     public Result<String> update(ScheduleWeekDetail scheduleWeekDetail) {
         boolean update = scheduleWeekDetailService.updateById(scheduleWeekDetail);
         if (update) {
@@ -70,14 +70,14 @@ public class ScheduleWeekDetailController {
 
     @GetMapping("/{id}")
     @OperLogAnn(title = "查询排课周次详情表记录", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询排课周次详情表记录")
+    @Operation(summary = "查询排课周次详情表记录")
     public Result<ScheduleWeekDetail> getById(@PathVariable Long id) {
         return Result.ok(scheduleWeekDetailService.getById(id));
     }
 
     @GetMapping("list")
     @OperLogAnn(title = "查询排课周次详情表记录", businessType = OperLogAnn.BusinessType.SELECT)
-    @ApiOperation(value = "查询排课周次详情表记录")
+    @Operation(summary = "查询排课周次详情表记录")
     public Result<List<ScheduleWeekDetail>> list(ScheduleWeekDetail scheduleWeekDetail, Page<ScheduleWeekDetail> page) {
         LambdaQueryWrapper<ScheduleWeekDetail> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(scheduleWeekDetail.getWeekNumber()), ScheduleWeekDetail::getWeekNumber, scheduleWeekDetail.getWeekNumber());

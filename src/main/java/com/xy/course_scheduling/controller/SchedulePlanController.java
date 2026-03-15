@@ -6,8 +6,8 @@ import com.xy.course_scheduling.entity.SchedulePlan;
 import com.xy.course_scheduling.entity.SchedulingResult;
 import com.xy.course_scheduling.service.SemesterService;
 import com.xy.course_scheduling.service.SchedulePlanService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/schedulePlan")
 @Slf4j
-@Api(tags = "排课计划")
+@Tag(name = "排课计划")
 public class SchedulePlanController {
 
     @Resource
@@ -43,7 +43,7 @@ public class SchedulePlanController {
     private HybridCourseSchedulingAlgorithm hybridCourseSchedulingAlgorithm;
 
     @PostMapping
-    @ApiOperation(value = "保存排课计划", notes = "保存排课计划")
+    @Operation(summary = "保存排课计划")
     public Result<SchedulePlan> save(SchedulePlan schedulePlan) {
         // 检查该学期是否已有排课计划
         List<SchedulePlan> existingPlans = schedulePlanService.list(new LambdaQueryWrapper<SchedulePlan>()
@@ -71,7 +71,7 @@ public class SchedulePlanController {
      * 执行排课（前端主动调用）
      */
     @PostMapping("/execute")
-    @ApiOperation(value = "执行排课", notes = "执行排课")
+    @Operation(summary = "执行排课")
     public Result<String> executeSchedule(@RequestParam("semesterId") Integer semesterId,
                                           @RequestParam("schedulePlanId") Integer schedulePlanId) {
         System.out.println("=== 排课请求参数 ===");
@@ -103,7 +103,7 @@ public class SchedulePlanController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除排课计划", notes = "删除排课计划")
+    @Operation(summary = "删除排课计划")
     public Result<String> delete(@PathVariable Long id) {
         boolean remove = schedulePlanService.removeById(id);
         if (remove) {
@@ -113,7 +113,7 @@ public class SchedulePlanController {
     }
 
     @PutMapping
-    @ApiOperation(value = "修改排课计划", notes = "修改排课计划")
+    @Operation(summary = "修改排课计划")
     public Result<String> update(SchedulePlan schedulePlan) {
         boolean update = schedulePlanService.updateById(schedulePlan);
         if (update) {
@@ -123,13 +123,13 @@ public class SchedulePlanController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取排课计划", notes = "获取排课计划")
+    @Operation(summary = "获取排课计划")
     public Result<SchedulePlan> getById(@PathVariable Long id) {
         return Result.ok(schedulePlanService.getById(id));
     }
 
     @GetMapping("list")
-    @ApiOperation(value = "获取排课计划列表", notes = "获取排课计划列表")
+    @Operation(summary = "获取排课计划列表")
     public Result<List<SchedulePlan>> list(SchedulePlan schedulePlan, Page<SchedulePlan> page) {
         LambdaQueryWrapper<SchedulePlan> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ObjectUtils.isNotEmpty(schedulePlan.getSchedulePlanId()), SchedulePlan::getSchedulePlanId, schedulePlan.getSchedulePlanId());
@@ -147,7 +147,7 @@ public class SchedulePlanController {
      * 重新排课（清空现有课表后重新排课）
      */
     @PostMapping("/retry/{id}")
-    @ApiOperation(value = "重新排课", notes = "重新排课")
+    @Operation(summary = "重新排课")
     public Result<String> retrySchedule(@PathVariable Integer id) {
         SchedulePlan plan = schedulePlanService.getById(id);
         if (plan == null) {
