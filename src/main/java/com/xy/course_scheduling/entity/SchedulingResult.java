@@ -1,8 +1,7 @@
 package com.xy.course_scheduling.entity;
 
 import com.xy.course_scheduling.algorithm.CourseSchedulingAlgorithm;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.util.List;
 
@@ -10,24 +9,24 @@ import java.util.List;
  * 排课结果
  */
 @Data
-@ApiModel(value = "SchedulingResult", description = "排课结果")
+@Schema(description = "排课结果")
 public class SchedulingResult {
-    @ApiModelProperty(value = "排课状态")
+    @Schema(description = "排课状态")
     private SchedulingStatus status;
     
-    @ApiModelProperty(value = "成功排课的课程列表")
+    @Schema(description = "成功排课的课程列表")
     private List<Schedule> scheduledClasses;
     
-    @ApiModelProperty(value = "排课失败的任务列表")
+    @Schema(description = "排课失败的任务列表")
     private List<TeachingTask> failedTasks;
     
-    @ApiModelProperty(value = "结果消息")
+    @Schema(description = "结果消息")
     private String message;
     
-    @ApiModelProperty(value = "成功排课数量")
+    @Schema(description = "成功排课数量")
     private Integer scheduledCount;
     
-    @ApiModelProperty(value = "失败排课数量")
+    @Schema(description = "失败排课数量")
     private Integer failedCount;
 
     public SchedulingResult(SchedulingStatus status, List<Schedule> scheduledClasses,

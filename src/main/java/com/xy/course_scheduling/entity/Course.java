@@ -6,8 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,41 +22,41 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @TableName("tb_course")
-@ApiModel(value = "Course", description = "课程信息表")
+@Schema(description = "课程信息表")
 public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "course_id", type = IdType.AUTO)
-    @ApiModelProperty(value = "课程 ID")
+    @Schema(description = "课程 ID")
     private Integer courseId;
     
     @TableField(value = "campus_id")
-    @ApiModelProperty(value = "校区 ID")
+    @Schema(description = "校区 ID")
     private Integer campusId;
     
     @TableField(exist = false)
-    @ApiModelProperty(value = "校区信息")
+    @Schema(description = "校区信息")
     private Campus campus;
 
     @TableField("semester_id")
-    @ApiModelProperty(value = "学期 ID")
+    @Schema(description = "学期 ID")
     private Integer semesterId;
     
     @TableField(exist = false)
-    @ApiModelProperty(value = "学期信息")
+    @Schema(description = "学期信息")
     private Semester semester;
 
     @TableField("course_code")
-    @ApiModelProperty(value = "课程编号")
+    @Schema(description = "课程编号")
     private String courseCode;
 
     @TableField("course_name")
-    @ApiModelProperty(value = "课程名称")
+    @Schema(description = "课程名称")
     private String courseName;
 
     @TableField("credit")
-    @ApiModelProperty(value = "学分")
+    @Schema(description = "学分")
     private BigDecimal credit;
 
     /**
@@ -65,7 +64,7 @@ public class Course implements Serializable {
      */
     @TableField(value = "deleted", fill = FieldFill.INSERT)
     @TableLogic(value = "0", delval = "1")
-    @ApiModelProperty(value = "是否删除")
+    @Schema(description = "是否删除")
     private Integer deleted;
 
     /**
@@ -73,7 +72,7 @@ public class Course implements Serializable {
      */
     @TableField(value = "updated_time", fill = FieldFill.INSERT_UPDATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updatedTime;
 
     /**
@@ -81,6 +80,6 @@ public class Course implements Serializable {
      */
     @TableField(value = "created_time", fill = FieldFill.INSERT)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createdTime;
 }

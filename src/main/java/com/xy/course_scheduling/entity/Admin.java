@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,30 +21,30 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @TableName("tb_admin")
-@ApiModel(description = "管理员信息表")
+@Schema(description = "管理员信息表")
 public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "admin_id", type = IdType.AUTO)
-    @ApiModelProperty(value = "管理员ID")
+    @Schema(description = "管理员 ID")
     private Integer adminId;
 
     @TableField("name")
-    @ApiModelProperty(value = "姓名")
+    @Schema(description = "姓名")
     private String name;
 
 
     @TableField("username")
-    @ApiModelProperty(value = "用户名")
+    @Schema(description = "用户名")
     private String username;
 
     @TableField("password")
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     private String password;
 
     @TableField("avatar")
-    @ApiModelProperty(value = "头像")
+    @Schema(description = "头像")
     private String avatar;
 
     /**
@@ -54,7 +53,7 @@ public class Admin implements Serializable {
 
     @TableField(value = "deleted", fill = FieldFill.INSERT)
     @TableLogic(value = "0", delval = "1")
-    @ApiModelProperty(value = "是否删除")
+    @Schema(description = "是否删除")
     private Integer deleted;
 
     /**
@@ -62,7 +61,7 @@ public class Admin implements Serializable {
      */
     @TableField(value = "updated_time", fill = FieldFill.INSERT_UPDATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updatedTime;
 
     /**
@@ -70,6 +69,6 @@ public class Admin implements Serializable {
      */
     @TableField(value = "created_time", fill = FieldFill.INSERT)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createdTime;
 }

@@ -2,26 +2,25 @@ package com.xy.course_scheduling.entity;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
-@ApiModel(value = "Result", description = "统一响应结果")
+@Schema(description = "统一响应结果")
 public class Result<T> {
-    @ApiModelProperty(value = "状态码")
+    @Schema(description = "状态码")
     private Integer code;
     
-    @ApiModelProperty(value = "响应消息")
+    @Schema(description = "响应消息")
     private String message;
     
-    @ApiModelProperty(value = "响应数据")
+    @Schema(description = "响应数据")
     private T data;
     
-    @ApiModelProperty(value = "总记录数")
+    @Schema(description = "总记录数")
     private Long total;
     
-    @ApiModelProperty(value = "当前页码")
+    @Schema(description = "当前页码")
     private Long current;
 
     public static <T> Result<T> ok(T data) {

@@ -1,52 +1,45 @@
 package com.xy.course_scheduling.config;
 
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.OpenAPI;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
 @Slf4j
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     /**
-     * 通过knife4j生成接口文档
-     *
-     * @return
+     * 配置OpenAPI 3.0文档（替代原Swagger 2.0的Docket）
      */
     @Bean
-    public Docket docket() {
+    public OpenAPI openAPI() {
         log.info("开始生成接口文档...");
-        ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("排课项目接口文档")
-                .version("1.0")
-                .description("排课项目接口文档")
-                .build();
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.xy.course_scheduling.controller"))
-                .paths(PathSelectors.any())
-                .build();
-        return docket;
+        return new OpenAPI()
+                // 接口文档基本信息
+                .info(new Info()
+                        .title("排课项目接口文档")
+                        .version("1.0")
+                        .description("排课项目接口文档"));
     }
 
     /**
-     * 设置静态资源映射
-     *
-     * @param registry
+     * 静态资源映射（Knife4j需要）
      */
     @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Knife4j文档页面
+        registry.addResourceHandler("/doc.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        // 文档页面依赖的静态资源
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        // 补充OpenAPI 3.0的json资源映射（关键，否则文档数据加载失败）
+        registry.addResourceHandler("/v3/api-docs/**")
+                .addResourceLocations("classpath:/META-INF/resources/v3/api-docs/");
     }
 
 }

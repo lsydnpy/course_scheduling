@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,53 +21,53 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @TableName("tb_schedule")
-@ApiModel(value = "Schedule", description = "课程安排表")
+@Schema(description = "课程安排表")
 public class Schedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "schedule_id", type = IdType.AUTO)
-    @ApiModelProperty(value = "课程安排 ID")
+    @Schema(description = "课程安排 ID")
     private Integer scheduleId;
 
     @TableField("task_id")
-    @ApiModelProperty(value = "教学任务 ID")
+    @Schema(description = "教学任务 ID")
     private Integer taskId;
     
     @TableField(exist = false)
-    @ApiModelProperty(value = "教学任务信息")
+    @Schema(description = "教学任务信息")
     private TeachingTask teachingTask;
 
     @TableField("classroom_id")
-    @ApiModelProperty(value = "教室 ID")
+    @Schema(description = "教室 ID")
     private Integer classroomId;
     
     @TableField(exist = false)
-    @ApiModelProperty(value = "教室信息")
+    @Schema(description = "教室信息")
     private Classroom classroom;
 
     @TableField("semester_id")
-    @ApiModelProperty(value = "学期 ID")
+    @Schema(description = "学期 ID")
     private Integer semesterId;
     
     @TableField(exist = false)
-    @ApiModelProperty(value = "学期信息")
+    @Schema(description = "学期信息")
     private Semester semester;
 
     @TableField("day_of_week")
-    @ApiModelProperty(value = "星期几")
+    @Schema(description = "星期几")
     private Integer dayOfWeek;
 
     @TableField("lesson_start")
-    @ApiModelProperty(value = "开始节次")
+    @Schema(description = "开始节次")
     private Integer lessonStart;
 
     @TableField("lesson_end")
-    @ApiModelProperty(value = "结束节次")
+    @Schema(description = "结束节次")
     private Integer lessonEnd;
 
     @TableField("week_pattern")
-    @ApiModelProperty(value = "周次模式")
+    @Schema(description = "周次模式")
     private Long weekPattern;
 
     /**
@@ -76,7 +75,7 @@ public class Schedule implements Serializable {
      */
     @TableField(value = "deleted", fill = FieldFill.INSERT)
     // @TableLogic(value = "0", delval = "1")  // 注释掉这个注解，避免覆盖自动填充的值
-    @ApiModelProperty(value = "是否删除")
+    @Schema(description = "是否删除")
     private Integer deleted;
 
     /**
@@ -84,7 +83,7 @@ public class Schedule implements Serializable {
      */
     @TableField(value = "updated_time", fill = FieldFill.INSERT_UPDATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updatedTime;
 
     /**
@@ -92,6 +91,6 @@ public class Schedule implements Serializable {
      */
     @TableField(value = "created_time", fill = FieldFill.INSERT)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createdTime;
 }

@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @TableName("tb_oper_log")
-@ApiModel(value = "OperLog", description = "系统操作日志记录表")
+@Schema(description = "系统操作日志记录表")
 public class OperLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,105 +30,105 @@ public class OperLog implements Serializable {
      * 日志主键
      */
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "日志主键")
+    @Schema(description = "日志主键")
     private Integer id;
 
     /**
      * 模块标题/业务模块
      */
     @TableField("title")
-    @ApiModelProperty(value = "模块标题/业务模块")
+    @Schema(description = "模块标题/业务模块")
     private String title;
 
     /**
      * 业务类型（INSERT,UPDATE,DELETE,OTHER）
      */
     @TableField("business_type")
-    @ApiModelProperty(value = "业务类型")
+    @Schema(description = "业务类型")
     private String businessType;
 
     /**
      * 请求方法名（包名。类名。方法名）
      */
     @TableField("method")
-    @ApiModelProperty(value = "请求方法名")
+    @Schema(description = "请求方法名")
     private String method;
 
     /**
      * HTTP 请求方式（GET, POST 等）
      */
     @TableField("request_method")
-    @ApiModelProperty(value = "HTTP 请求方式")
+    @Schema(description = "HTTP 请求方式")
     private String requestMethod;
 
     /**
      * 操作人员用户名
      */
     @TableField("operator_username")
-    @ApiModelProperty(value = "操作人员用户名")
+    @Schema(description = "操作人员用户名")
     private String operatorUsername;
 
     /**
      * 操作人员名称
      */
     @TableField("operator_name")
-    @ApiModelProperty(value = "操作人员名称")
+    @Schema(description = "操作人员名称")
     private String operatorName;
 
     /**
      * 请求 URL
      */
     @TableField("oper_url")
-    @ApiModelProperty(value = "请求 URL")
+    @Schema(description = "请求 URL")
     private String operUrl;
 
     /**
      * 操作主机 IP 地址
      */
     @TableField("oper_ip")
-    @ApiModelProperty(value = "操作主机 IP 地址")
+    @Schema(description = "操作主机 IP 地址")
     private String operIp;
 
     /**
      * 请求参数（JSON 格式，过长可截断或摘要）
      */
     @TableField("oper_param")
-    @ApiModelProperty(value = "请求参数")
+    @Schema(description = "请求参数")
     private String operParam;
 
     /**
      * 返回结果（JSON 格式，过长可截断）
      */
     @TableField("json_result")
-    @ApiModelProperty(value = "返回结果")
+    @Schema(description = "返回结果")
     private String jsonResult;
 
     /**
      * 操作状态（0 成功 1 异常）
      */
     @TableField("status")
-    @ApiModelProperty(value = "操作状态")
+    @Schema(description = "操作状态")
     private Integer status;
 
     /**
      * 错误消息（异常时记录）
      */
     @TableField("error_msg")
-    @ApiModelProperty(value = "错误消息")
+    @Schema(description = "错误消息")
     private String errorMsg;
 
     /**
      * 操作时间
      */
     @TableField("oper_time")
-    @ApiModelProperty(value = "操作时间")
+    @Schema(description = "操作时间")
     private LocalDateTime operTime;
 
     /**
      * 执行时长（毫秒）
      */
     @TableField("execute_time")
-    @ApiModelProperty(value = "执行时长（毫秒）")
+    @Schema(description = "执行时长（毫秒）")
     private Long executeTime;
 
     /**
@@ -137,7 +136,7 @@ public class OperLog implements Serializable {
      */
     @TableField(value = "deleted", fill = FieldFill.INSERT)
     @TableLogic(value = "0", delval = "1")
-    @ApiModelProperty(value = "是否删除")
+    @Schema(description = "是否删除")
     private Integer deleted;
 
     /**
@@ -145,7 +144,7 @@ public class OperLog implements Serializable {
      */
     @TableField(value = "updated_time", fill = FieldFill.INSERT_UPDATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updatedTime;
 
     /**
@@ -153,6 +152,6 @@ public class OperLog implements Serializable {
      */
     @TableField(value = "created_time", fill = FieldFill.INSERT)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createdTime;
 }
